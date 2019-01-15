@@ -18,7 +18,7 @@ app.use(cors())
 app.post( '/payment' , function ( request, response ) {
 
     let objPayment = {
-        id_client: request.body.id,
+        id_client: request.body.id_client,
         name_buyer: request.body.name_buyer,
         email_buyer: request.body.email_buye,
         cpf_buyer: request.body.cpf_buyer,
@@ -26,11 +26,11 @@ app.post( '/payment' , function ( request, response ) {
         type_payment: request.body.type_payment
     }
 
-    if ( objPayment.type_payment === 'boleto') {
+    if ( objPayment.type_payment == 'boleto') {
         response.send(paymentMethod.boleto())
     }
 
-    if ( objPayment.type_payment === 'card') {
+    if ( objPayment.type_payment == 'card') {
         objPayment = {
             ...objPayment,
             card_flag: request.body.card_flag,
@@ -39,7 +39,7 @@ app.post( '/payment' , function ( request, response ) {
             card_expiration: request.body.card_expiration,
             card_cvv: request.body.card_cvv
         }
-        response.send( objPayment )
+        response.send(  paymentMethod.creditCard( objPayment ) )
     }
 
 } )
