@@ -1,3 +1,7 @@
+const service = require('./service')
+
+const PaymentService = new service()
+
 class Payment {
 
     constructor(){
@@ -14,6 +18,7 @@ class Payment {
             throw Error( 'Não foram passadas todas as informações do cartão' )
         }
 
+        return PaymentService.doPayment(dataPayment)
     }
 
 }
