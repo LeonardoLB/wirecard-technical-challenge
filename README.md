@@ -1,15 +1,15 @@
 # wirecard-technical-challenge
 
 
-#Rodando
+# Rodar aplicação
 
-##Requisitos (Contenha instalado em sua máquina)
+## Requisitos (Contenha instalado em sua máquina)
 
 - MongoDb
 - NodeJS
 - Docker (Caso opte em utilizar)
 
-#Subindo um container do mongoDb no docker
+# Subindo um container do MongoDB no Docker
 
 ```
 docker run \
@@ -21,12 +21,10 @@ docker run \
     mongo:4 \
 ```
 
-## Vamos criar um database dentro do MongoDb e um usuario para acessar essas informações.
+## Criando um database dentro do MongoDb e um usuario para acessar essas informações.
 
 ```
 docker exec -it mongodb \
     mongo --host localhost -u admin -p mypassword --authenticationDatabase admin \
     --eval "db.getSiblingDB('wirecard').createUser({user: 'myuser', pwd: 'mypassword', roles: [{role: 'readWrite', db: 'wirecard'}]})"
 ```
-
-
