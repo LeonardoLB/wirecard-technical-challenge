@@ -7,17 +7,40 @@ const Payment = require('./payment')
 
 // run express
 var app = express()
+
+// instance my Payment Class
 var paymentMethod = new Payment()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 
-app.get( '/payment/boleto', function ( request, response ) {
-    response.send( paymentMethod.Boleto() )
-} )
+app.post( '/payment' , function ( request, response ) {
 
-app.post( '/payment/credit-card' , function ( resquest, response ) {
+    let objPayment = {
+        id_client: request.body.id,
+        name_buyer: request.body.name_buyer,
+        email_buyer: request.body.email_buye,
+        cpf_buyer: request.body.cpf_buyer,
+        amount_payment: request.body.amount_payment,
+        type_payment: request.body.type_payment
+    }
+
+    if ( objPayment.type_payment === 'boleto') {
+        response.send(paymentMethod.boleto())
+    }
+
+    if ( objPayment.type_payment === 'card') {
+        objPayment = {
+            ...objPayment,
+            card_flag: request.body.card_flag,
+            card_name: request.body.card_nam,
+            card_number: request.body.card_number,
+            card_expiration: request.body.card_expiration,
+            card_cvv: request.body.card_cvv
+        }
+        response.send( objPayment )
+    }
 
 } )
 
