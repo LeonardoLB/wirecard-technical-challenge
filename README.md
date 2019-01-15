@@ -1,9 +1,9 @@
-# wirecard-technical-challenge
+### wirecard-technical-challenge
 
 
-# Rodar aplicação
+## Rodar aplicação
 
-## Requisitos (Contenha instalado em sua máquina)
+# Requisitos (Contenha instalado em sua máquina)
 
 - MongoDb
 - NodeJS
@@ -21,7 +21,7 @@ docker run \
     mongo:4 \
 ```
 
-## Criando um database dentro do MongoDb e um usuario para acessar essas informações.
+# Criando um database dentro do MongoDb e um usuario para acessar essas informações.
 
 ```
 docker exec -it mongodb \
