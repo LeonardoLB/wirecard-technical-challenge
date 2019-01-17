@@ -78,7 +78,7 @@ class MongoDB {
                 type: Number,
                 require: true,
                 default: 0
-            }
+            },
         })
 
         this._modelPayment = Mongoose.model('payment', this._Paymentschema)
@@ -112,6 +112,10 @@ class MongoDB {
             },
             type_payment: {
                 type: String,
+                required: true
+            },
+            boleto_codebar:{
+                type: Number,
                 required: true
             },
             payment_status: {

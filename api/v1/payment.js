@@ -9,11 +9,11 @@ class Payment {
     }
 
     boleto( dataPayment ){
-        return { codebar: '341917900101043510047910201500085776895833333330026000' }
+        return PaymentService.doBoletoPayment(dataPayment)
     }
 
     creditCard(dataPayment){
-        return PaymentService.doPayment(dataPayment)
+        return PaymentService.doCardPayment(dataPayment)
     }
 
 }
