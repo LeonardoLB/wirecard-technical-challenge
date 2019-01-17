@@ -8,16 +8,11 @@ class Payment {
 
     }
 
-    boleto(){
+    boleto( dataPayment ){
         return { codebar: '341917900101043510047910201500085776895833333330026000' }
     }
 
-    creditCard( dataPayment ){
-
-        if (dataPayment.card_flag == '' || dataPayment.card_name == '' || dataPayment.card_number == '' || dataPayment.card_expiration == '' || dataPayment.card_cvv == '' ) {
-            throw Error( 'Não foram passadas todas as informações do cartão' )
-        }
-
+    creditCard(dataPayment){
         return PaymentService.doPayment(dataPayment)
     }
 

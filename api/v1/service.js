@@ -1,3 +1,7 @@
+const Database = require('./database/mongodb')
+
+const database = new Database()
+
 class Service {
 
     constructor() {
@@ -17,8 +21,12 @@ class Service {
 
     }
 
-    doPayment(data){
-        return { value: 'Pagamento realizado' }
+    doPayment(dataPayment){
+
+        this.validateEmptyData(dataPayment)
+
+        let resultInsert = database.insert(dataPayment)
+        return resultInsert
     }
 
     async validateCard(number){
@@ -27,6 +35,15 @@ class Service {
 
     async identifyBuyer(){
 
+    }
+
+    validateEmptyData(dataPayment){
+        for (const key in dataPayment) {
+            if (dataPayment[key] === '') {
+                return false
+            }
+        }
+        return true
     }
 
 

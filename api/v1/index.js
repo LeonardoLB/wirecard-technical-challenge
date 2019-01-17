@@ -20,14 +20,14 @@ app.post( '/payment' , function ( request, response ) {
     let objPayment = {
         id_client: request.body.id_client,
         name_buyer: request.body.name_buyer,
-        email_buyer: request.body.email_buye,
+        email_buyer: request.body.email_buyer,
         cpf_buyer: request.body.cpf_buyer,
         amount_payment: request.body.amount_payment,
         type_payment: request.body.type_payment
     }
 
     if ( objPayment.type_payment == 'boleto') {
-        response.send(paymentMethod.boleto())
+        response.send(paymentMethod.boleto(objPayment))
     }
 
     if ( objPayment.type_payment == 'card') {
