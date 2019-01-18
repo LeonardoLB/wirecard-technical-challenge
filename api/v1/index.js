@@ -33,16 +33,21 @@ app.post( '/payment' , function ( request, response ) {
     if ( objPayment.type_payment == 'card') {
         objPayment = {
             ...objPayment,
-            card_flag: request.body.card_flag,
             card_name: request.body.card_name,
             card_number: request.body.card_number,
             card_expiration: request.body.card_expiration,
             card_cvv: request.body.card_cvv
         }
-        response.send( paymentMethod.creditCard(objPayment) )
+        response.send(paymentMethod.creditCard(objPayment))
     }
 
 } )
+
+// app.get( '/payment/status/:payment_id' , function (request, resonse) {
+
+
+
+// } )
 
 // the door where our api should work, acess like: localhost:8002
 app.listen(8002)

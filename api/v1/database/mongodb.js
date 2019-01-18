@@ -5,6 +5,7 @@ class MongoDB {
 
     constructor(){
 
+        this._BuyerSchema = null
         this._Paymentschema = null
         this._modelPayment = null
 
@@ -29,7 +30,7 @@ class MongoDB {
 
 
 
-    definePaymentCardSchema(){
+    async definePaymentCardSchema(){
 
         this.connectDatabase()
 
@@ -58,16 +59,20 @@ class MongoDB {
                 type: String,
                 required: true
             },
-            card_flag: {
-                type: String,
-                required: true
-            },
             card_name: {
                 type: String,
                 required: true
             },
             card_expiration: {
                 type: Number,
+                required: true
+            },
+            card_number: {
+                type: String,
+                required: true
+            },
+            card_issuer: {
+                type: String,
                 required: true
             },
             card_cvv: {
@@ -83,9 +88,10 @@ class MongoDB {
 
         this._modelPayment = Mongoose.model('payment', this._Paymentschema)
 
+
     }
 
-    definePaymentBoletoSchema(){
+    async definePaymentBoletoSchema(){
 
         this.connectDatabase()
 
@@ -126,10 +132,33 @@ class MongoDB {
         })
 
         this._modelPayment = Mongoose.model('payment', this._Paymentschema)
+
+    }
+
+    defineBuyerSchema(){
+
+        this.connectDatabase()
+
+        this._BuyerSchema = new Mongoose.Schema({
+            name_buyer: {
+                type: String,
+                require: true
+            },
+            email_buyer: {
+                type: String,
+                require: true
+            },
+            cpf_buyer: {
+                type: String,
+                require: true
+            }
+        })
+
+
     }
 
 
-    async insert(dataPayment){
+    async insertPayment(dataPayment){
 
         let resulInsert = null
 

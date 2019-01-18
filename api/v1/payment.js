@@ -4,11 +4,7 @@ const PaymentService = new service()
 
 class Payment {
 
-    constructor(){
-
-    }
-
-    boleto( dataPayment ){
+    boleto(dataPayment){
         return PaymentService.doBoletoPayment(dataPayment)
     }
 

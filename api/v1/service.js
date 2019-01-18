@@ -1,4 +1,5 @@
 const Database = require('./database/mongodb')
+const creditCardValidation = require('credit-card-validation')
 const database = new Database()
 
 class Service {
@@ -30,27 +31,53 @@ class Service {
 
         dataPayment = {
             ...dataPayment,
-            boleto_codebar:  codebar
+            boleto_codebar: codebar
         }
 
-        let resultInsert = database.insert(dataPayment)
-        return resultInsert
+        let { boleto_codebar } = database.insertPayment(dataPayment)
+        return boleto_codebar
 
     }
 
     doCardPayment(dataPayment){
 
         if (!this.validateEmptyData(dataPayment)) {
-            return console.error('Está faltando informação')
+            throw('Está faltando informação')
         }
 
-        let resultInsert = database.insert(dataPayment)
+        if (!this.validateCard(dataPayment)) {
+            throw('Numero de cartão invalido')
+        }
+
+        dataPayment = {
+            ...dataPayment,
+            card_issuer: this.identifyIssuerCard(dataPayment)
+        }
+
+        let resultInsert = database.insertPayment(dataPayment)
         return resultInsert
     }
 
-    async validateCard(number){
-        return await true
+    validateCard(dataPayment){
+
+        let card = creditCardValidation(dataPayment.card_number)
+
+        if (!card.isValid()) {
+            throw('cartão invalido')
+        }
+
+        return true
+
     }
+
+    identifyIssuerCard(dataPayment){
+
+        let card = creditCardValidation(dataPayment.card_number)
+
+        return card.getType()
+
+    }
+
 
     async identifyBuyer(){
 
