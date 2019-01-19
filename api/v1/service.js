@@ -1,6 +1,9 @@
 const Database = require('./database/mongodb')
 const creditCardValidation = require('credit-card-validation')
+const ErrorHandling = require('./error')
 const database = new Database()
+
+
 
 class Service {
 
@@ -8,36 +11,37 @@ class Service {
 
     }
 
-    async status() {
 
-        /*
-            simlation status:
-            0 = awaiting
-            1 = aproved
-            2 = not aproved
-        */
 
-        return 1
+    async doBoletoPayment(dataPayment){
 
-    }
-
-    doBoletoPayment(dataPayment){
 
         if(!this.validateEmptyData(dataPayment)){
-            return console.error( 'Está faltando informação' )
+            return new ErrorHandling('Validate', 'Ocorreu um erro, existem informações vazias')
         }
-
-        let codebar = this.generatorBoletoCodebar()
 
         dataPayment = {
             ...dataPayment,
-            boleto_codebar: codebar
+            boleto_information: {
+                boleto_codebar: this.generatorBoletoCodebar()
+            }
         }
 
-        let { boleto_codebar } = database.insertPayment(dataPayment)
-        return boleto_codebar
+        if(!this.validateEmptyData(dataPayment.boleto_information)){
+            return new ErrorHandling('Validate','Ocorreu um erro, existem informações vazias sobre o boleto')
+        }
+
+        let response = await database.insertPayment(dataPayment)
+
+        if(response.IsOk === false){
+            return new ErrorHandling( response.type, response.problem )
+        }
+
+        return response.responseInsert.boleto_information.boleto_codebar
 
     }
+
+
 
     doCardPayment(dataPayment){
 
@@ -58,6 +62,8 @@ class Service {
         return resultInsert
     }
 
+
+
     validateCard(dataPayment){
 
         let card = creditCardValidation(dataPayment.card_number)
@@ -70,10 +76,11 @@ class Service {
 
     }
 
+
+
     identifyIssuerCard(dataPayment){
 
         let card = creditCardValidation(dataPayment.card_number)
-
         return card.getType()
 
     }
@@ -83,6 +90,8 @@ class Service {
 
     }
 
+
+
     validateEmptyData(dataPayment){
         for (const key in dataPayment) {
             if (dataPayment[key] === '') {
@@ -91,6 +100,8 @@ class Service {
         }
         return true
     }
+
+
 
     generatorBoletoCodebar(){
         let avaibleBoletos = {
@@ -111,8 +122,8 @@ class Service {
         return avaibleBoletos[randomNumber]
 
     }
-
-
 }
+
+
 
 module.exports = Service

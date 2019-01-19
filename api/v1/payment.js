@@ -4,8 +4,8 @@ const PaymentService = new service()
 
 class Payment {
 
-    boleto(dataPayment){
-        return PaymentService.doBoletoPayment(dataPayment)
+    async boleto(dataPayment){
+        return await PaymentService.doBoletoPayment(dataPayment)
     }
 
     creditCard(dataPayment){

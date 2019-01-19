@@ -27,16 +27,18 @@ app.post( '/payment' , function ( request, response ) {
     }
 
     if ( objPayment.type_payment == 'boleto') {
-        response.send(paymentMethod.boleto(objPayment))
+        response.send( paymentMethod.boleto(objPayment))
     }
 
     if ( objPayment.type_payment == 'card') {
         objPayment = {
             ...objPayment,
-            card_name: request.body.card_name,
-            card_number: request.body.card_number,
-            card_expiration: request.body.card_expiration,
-            card_cvv: request.body.card_cvv
+            card_information: {
+                card_name: request.body.card_name,
+                card_number: request.body.card_number,
+                card_expiration: request.body.card_expiration,
+                card_cvv: request.body.card_cvv
+            }
         }
         response.send(paymentMethod.creditCard(objPayment))
     }
