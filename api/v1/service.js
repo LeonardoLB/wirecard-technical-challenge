@@ -7,15 +7,38 @@ const database = new Database()
 
 class Service {
 
-    constructor() {
+    async status(id){
+
+        /*
+            Status Code
+            0 Aguardando
+            1 Aprovado
+            2 Negado
+        */
+
+        let responseFind = await database.getPaymentStatus(id)
+        if (!responseFind.IsOk) {
+            return new ErrorHandling(responseFind.type, responseFind.problem )
+        }
+
+        return { Payment_Information: responseFind.databaseResponse[0]}
 
     }
 
 
-
     async doBoletoPayment(dataPayment){
 
+        let buyerInfo = await this.identifyBuyer(dataPayment.cpf_buyer)
 
+        if (!buyerInfo) {
+            return new ErrorHandling('Validate', 'Ocorreu um erro, você não está cadastrado, por favor se cadastre para prosseguir')
+        }
+
+        dataPayment = {
+            ...dataPayment,
+            name_buyer: buyerInfo.name,
+            email_buyer: buyerInfo.email
+        }
         if(!this.validateEmptyData(dataPayment)){
             return new ErrorHandling('Validate', 'Ocorreu um erro, existem informações vazias')
         }
@@ -30,20 +53,31 @@ class Service {
         if(!this.validateEmptyData(dataPayment.boleto_information)){
             return new ErrorHandling('Validate','Ocorreu um erro, existem informações vazias sobre o boleto')
         }
-
         let response = await database.insertPayment(dataPayment)
 
         if(response.IsOk === false){
             return new ErrorHandling( response.type, response.problem )
         }
 
-        return response.responseInsert.boleto_information.boleto_codebar
+        return { IsOk: true, codebar: response.responseInsert.boleto_information.boleto_codebar}
 
     }
 
 
 
     async doCardPayment(dataPayment){
+
+        let buyerInfo = await this.identifyBuyer(dataPayment.cpf_buyer)
+
+        if (!buyerInfo) {
+            return new ErrorHandling('Validate', 'Ocorreu um erro, você não está cadastrado, por favor se cadastre para prosseguir')
+        }
+
+        dataPayment = {
+            ...dataPayment,
+            name_buyer: buyerInfo.name,
+            email_buyer: buyerInfo.email
+        }
 
         if (!this.validateEmptyData(dataPayment)) {
             return new ErrorHandling('Validate', 'Ocorreu um erro, existem informações vazias')
@@ -66,7 +100,7 @@ class Service {
         if (!response.IsOk) {
             return new ErrorHandling(response.type, response.problem)
         }
-        return { message: 'Seu pagamento foi registrado com sucesso, e já está disponivel para consulta' }
+        return { IsOk: true, message: 'Seu pagamento foi registrado com sucesso, e já está disponivel para consulta' }
     }
 
 
@@ -103,7 +137,30 @@ class Service {
     }
 
 
-    async identifyBuyer(){
+
+    async identifyBuyer(cpf){
+        let response = await database.getBuyer(cpf)
+        if (!response.IsOk) {
+            return false
+        }
+        return { name: response.databaseResponse[0].name_buyer, email: response.databaseResponse[0].email_buyer }
+    }
+
+
+
+    async registerBuyer(dataBuyer){
+
+        if (!this.validateEmptyData(dataBuyer)) {
+            return new ErrorHandling( 'Validate', 'Ocorreu um problema, existem campos vazios para cadastrar o comprador' )
+        }
+
+        let response = await database.insertBuyer(dataBuyer)
+
+        if (!response.IsOk) {
+            return new ErrorHandling( response.type, response.problem )
+        }
+
+        return { IsOk: true, message: 'Comprador cadastro com sucesso' }
 
     }
 

@@ -4,6 +4,7 @@ class ErrorHandling {
 
         return {
             Error: {
+                IsOk: false,
                 type: type,
                 message: message
             }

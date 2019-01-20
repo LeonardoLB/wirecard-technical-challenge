@@ -4,23 +4,23 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const Payment = require('./payment')
+const Buyer = require('./buyer')
 
 // run express
 var app = express()
 
 // instance my Payment Class
 var paymentMethod = new Payment()
+var BuyerMethod = new Buyer()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 
-app.post( '/payment' , async function ( request, response ) {
+app.post( '/payment/register' , async function ( request, response ) {
 
     let objPayment = {
         id_client: request.body.id_client,
-        name_buyer: request.body.name_buyer,
-        email_buyer: request.body.email_buyer,
         cpf_buyer: request.body.cpf_buyer,
         amount_payment: request.body.amount_payment,
         type_payment: request.body.type_payment
@@ -52,11 +52,26 @@ app.post( '/payment' , async function ( request, response ) {
 
 } )
 
-// app.get( '/payment/status/:payment_id' , function (request, resonse) {
+app.post( '/buyer/register', async function (request, response) {
+    let objBuyer = {
+        name_buyer: request.body.name_buyer,
+        email_buyer: request.body.email_buyer,
+        cpf_buyer: request.body.cpf_buyer
+    }
 
+    let res = await BuyerMethod.RegisterBuyer(objBuyer)
+    response.send( res )
 
+} )
 
-// } )
+app.get( '/payment/status/:payment_id' , async function (request, response) {
+
+    let id = request.params.payment_id
+    let res = await paymentMethod.StatusPayment(id)
+    response.json( res )
+
+} )
+
 
 // the door where our api should work, acess like: localhost:8002
 app.listen(8002)

@@ -6,9 +6,11 @@ class MongoDB {
 
     constructor(){
 
-        this._BuyerSchema = null
         this._Paymentschema = null
+        this._Buyersschema = null
+
         this._modelPayment = null
+        this._modelBuyers = null
 
     }
 
@@ -131,22 +133,116 @@ class MongoDB {
 
 
 
+    async defineBuyerSchema(){
+
+        if (this._Buyersschema !== null) {
+            return true
+        }
+
+        this._Buyersschema = new Mongoose.Schema({
+            name_buyer: {
+                type: String,
+                required: true
+            },
+            email_buyer: {
+                type: String,
+                required: true
+            },
+            cpf_buyer: {
+                type: Number,
+                required: true
+            }
+        })
+        this._modelBuyers = Mongoose.model('buyer', this._Buyersschema)
+        if (!this._modelBuyers) {
+            return false
+        }
+        return true
+    }
+
+
+
     async insertPayment(dataPayment){
         this.connectDatabase()
         let isConnected = this.verifyConnection()
         if (!isConnected){
-            return { IsOk: false, problem: 'Ocorreu um erro ao conectar ao banco', type: 'database' }
+            return { IsOk: false, problem: 'Ocorreu um problema em conectar ao banco', type: 'database' }
         }
         if(!this.definePaymentSchema()){
-            return { IsOk: false , problem: 'Ocorreu um erro em definir o Schema', type: 'schema'}
+            return { IsOk: false , problem: 'Ocorreu um problema em definir o Schema', type: 'schema'}
         }
         try {
             let responseInsert = await this._modelPayment.create(dataPayment)
             return { IsOk: true, responseInsert }
         } catch (error) {
-            return { IsOk: false, problem: 'Ocorreu um erro em Inserir no banco', type: 'model' }
+            return { IsOk: false, problem: 'Ocorreu um problema em Inserir no banco', type: 'model' }
         }
     }
+
+
+
+    async getPaymentStatus(id){
+        this.connectDatabase()
+        let isConnected = this.verifyConnection()
+        if (!isConnected) {
+            return { IsOk: false, problem: 'Ocorreu um problema em conectar ao banco', type: 'database' }
+        }
+        if (!this.definePaymentSchema()) {
+            return { IsOk: false, problem: 'Ocorreu um problema em definir o Schema', type: 'schema' }
+        }
+        try {
+            let databaseResponse = await this._modelPayment.find({_id: id})
+            if (databaseResponse.length === 0) {
+                return { IsOk: false, problem: 'Não há pagamentos com esse id', type: 'empty' }
+            }
+            return { IsOk: true, databaseResponse }
+        } catch (error) {
+            return { IsOk: false, problem: 'Ocorreu um problema em Consultar no banco', type: 'model' }
+        }
+    }
+
+
+
+    async insertBuyer(dataBuyer){
+        this.connectDatabase()
+        let isConnected = this.verifyConnection()
+        if (!isConnected) {
+            return { IsOk: false, problem: 'Ocorreu um problema em conectar ao banco', type: 'database' }
+        }
+        if (!this.defineBuyerSchema()) {
+            return { IsOk: false, problem: 'Ocorreu um problema em definir o Schema', type: 'schema' }
+        }
+        try {
+            let databaseResponse = await this._modelBuyers.create(dataBuyer)
+            return { IsOk: true, databaseResponse }
+        } catch (error) {
+            return { IsOk: false, problem: 'Ocorreu um problema em cadastrar no banco', type: 'model' }
+        }
+    }
+
+
+
+    async getBuyer(cpf){
+        this.connectDatabase()
+        let isConnected = this.verifyConnection()
+        if (!isConnected) {
+            return { IsOk: false, problem: 'Ocorreu um problema em conectar ao banco', type: 'database'}
+        }
+        if (!this.defineBuyerSchema()) {
+            return { IsOk: false, problem: 'Ocorreu um problema em definir o Schema', type: 'schema' }
+        }
+        try {
+            let databaseResponse = await this._modelBuyers.find({cpf_buyer: cpf})
+            console.log(databaseResponse.length)
+            if (databaseResponse.length === 0) {
+                return { IsOk: false }
+            }
+            return { IsOk: true, databaseResponse }
+        } catch (error) {
+            return { IsOk: false, problem: 'Ocorreu um problema em Consultar no banco', type: 'model' }
+        }
+    }
+
 }
 
 
