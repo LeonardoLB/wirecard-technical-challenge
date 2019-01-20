@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 
-app.post( '/payment' , function ( request, response ) {
+app.post( '/payment' , async function ( request, response ) {
 
     let objPayment = {
         id_client: request.body.id_client,
@@ -26,11 +26,12 @@ app.post( '/payment' , function ( request, response ) {
         type_payment: request.body.type_payment
     }
 
-    if ( objPayment.type_payment == 'boleto') {
-        response.send( paymentMethod.boleto(objPayment))
+    if ( objPayment.type_payment === 'boleto') {
+        let res = await paymentMethod.boleto(objPayment)
+        response.send( res )
     }
 
-    if ( objPayment.type_payment == 'card') {
+    if ( objPayment.type_payment === 'card') {
         objPayment = {
             ...objPayment,
             card_information: {
@@ -40,7 +41,13 @@ app.post( '/payment' , function ( request, response ) {
                 card_cvv: request.body.card_cvv
             }
         }
-        response.send(paymentMethod.creditCard(objPayment))
+
+        let res = await paymentMethod.creditCard(objPayment)
+        response.send( res )
+    }
+
+    if ( objPayment.type_payment === '' ) {
+        response.send( { Error: 'Por Favor informar o tipo de pagamento' } )
     }
 
 } )

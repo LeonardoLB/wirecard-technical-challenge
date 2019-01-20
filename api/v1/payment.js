@@ -8,8 +8,8 @@ class Payment {
         return await PaymentService.doBoletoPayment(dataPayment)
     }
 
-    creditCard(dataPayment){
-        return PaymentService.doCardPayment(dataPayment)
+    async creditCard(dataPayment){
+        return await PaymentService.doCardPayment(dataPayment)
     }
 
 }

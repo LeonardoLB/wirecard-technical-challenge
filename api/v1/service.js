@@ -43,44 +43,61 @@ class Service {
 
 
 
-    doCardPayment(dataPayment){
+    async doCardPayment(dataPayment){
 
         if (!this.validateEmptyData(dataPayment)) {
-            throw('Está faltando informação')
+            return new ErrorHandling('Validate', 'Ocorreu um erro, existem informações vazias')
         }
 
-        if (!this.validateCard(dataPayment)) {
-            throw('Numero de cartão invalido')
+        if (!this.validateCard(dataPayment.card_information.card_number)) {
+            return new ErrorHandling('Validate', 'Ocorreu um erro, seu cartão parece não ser válido')
         }
 
-        dataPayment = {
-            ...dataPayment,
-            card_issuer: this.identifyIssuerCard(dataPayment)
+        dataPayment.card_information = {
+            ...dataPayment.card_information,
+                card_issuer: this.identifyIssuerCard(dataPayment.card_information.card_number)
+            }
+
+        if (!this.validateEmptyData(dataPayment.card_information)) {
+            return new ErrorHandling('Validate', 'Ocorreu um erro, existem informações vazias sobre seu cartão')
         }
 
-        let resultInsert = database.insertPayment(dataPayment)
-        return resultInsert
+        let response = await database.insertPayment(dataPayment)
+        if (!response.IsOk) {
+            return new ErrorHandling(response.type, response.problem)
+        }
+        return { message: 'Seu pagamento foi registrado com sucesso, e já está disponivel para consulta' }
     }
 
 
 
-    validateCard(dataPayment){
+    validateCard(cardNumber){
 
-        let card = creditCardValidation(dataPayment.card_number)
+        /*
+            Possible cards validate with npm package:
+            American Express
+            Diner's Club
+            Discover
+            JCB
+            Maestro
+            MasterCard
+            UnionPay
+            Visa
+        */
 
+        let card = creditCardValidation(cardNumber)
         if (!card.isValid()) {
-            throw('cartão invalido')
+            return false
         }
-
         return true
 
     }
 
 
 
-    identifyIssuerCard(dataPayment){
+    identifyIssuerCard(cardNumber){
 
-        let card = creditCardValidation(dataPayment.card_number)
+        let card = creditCardValidation(cardNumber)
         return card.getType()
 
     }

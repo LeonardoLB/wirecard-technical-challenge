@@ -1,6 +1,7 @@
 const Mongoose = require('mongoose')
 
 
+
 class MongoDB {
 
     constructor(){
@@ -57,70 +58,75 @@ class MongoDB {
 
 
     async definePaymentSchema(){
-            this._Paymentschema = new Mongoose.Schema({
-                id_client: {
-                    type: Number,
-                    required: true
-                },
-                name_buyer: {
-                    type: String,
-                    required: true
-                },
-                email_buyer: {
-                    type: String,
-                    required: true
-                },
-                cpf_buyer: {
-                    type: String,
-                    required: true
-                },
-                amount_payment: {
-                    type: Number,
-                    required: true
-                },
-                type_payment: {
-                    type: String,
-                    required: true
-                },
-                card_information: {
-                    card_name: {
-                        type: String,
-                        default: null
-                    },
-                    card_expiration: {
-                        type: Number,
-                        default: null
-                    },
-                    card_number: {
-                        type: String,
-                        default: null
-                    },
-                    card_issuer: {
-                        type: String,
-                        default: null
-                    },
-                    card_cvv: {
-                        type: Number,
-                        default: null
-                    }
-                },
-                boleto_information: {
-                    boleto_codebar: {
-                        type: Mongoose.Schema.Types.Decimal128,
-                        default: null
-                    }
-                },
-                payment_status: {
-                    type: Number,
-                    require: true,
-                    default: 0
-                }
-            })
-            this._modelPayment = Mongoose.model('payment', this._Paymentschema)
-            if (!this._modelPayment) {
-                return false
-            }
+
+        if (!this._Paymentschema === null) {
             return true
+        }
+
+        this._Paymentschema = new Mongoose.Schema({
+            id_client: {
+                type: Number,
+                required: true
+            },
+            name_buyer: {
+                type: String,
+                required: true
+            },
+            email_buyer: {
+                type: String,
+                required: true
+            },
+            cpf_buyer: {
+                type: String,
+                required: true
+            },
+            amount_payment: {
+                type: Number,
+                required: true
+            },
+            type_payment: {
+                type: String,
+                required: true
+            },
+            card_information: {
+                card_name: {
+                    type: String,
+                    default: null
+                },
+                card_expiration: {
+                    type: Number,
+                    default: null
+                },
+                card_number: {
+                    type: String,
+                    default: null
+                },
+                card_issuer: {
+                    type: String,
+                    default: null
+                },
+                card_cvv: {
+                    type: Number,
+                    default: null
+                }
+            },
+            boleto_information: {
+                boleto_codebar: {
+                    type: String,
+                    default: null
+                }
+            },
+            payment_status: {
+                type: Number,
+                require: true,
+                default: 0
+            }
+        })
+        this._modelPayment = Mongoose.model('payment', this._Paymentschema)
+        if (!this._modelPayment) {
+            return false
+        }
+        return true
     }
 
 
