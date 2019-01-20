@@ -59,7 +59,7 @@ class MongoDB {
 
     async definePaymentSchema(){
 
-        if (!this._Paymentschema === null) {
+        if (this._Paymentschema !== null) {
             return true
         }
 
