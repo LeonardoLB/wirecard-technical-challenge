@@ -1,0 +1,109 @@
+extends ../includes/template/main
+
+block details
+    - title = 'Checkout - Wirecard Teste'
+    - description = 'Wirecard checkout page'
+
+block body
+
+    aside
+        .logo
+            img( src = '../assets/images/wirecard.svg' )
+
+        nav
+            .btn_payment Registrar Pagamento
+            .btn_buyer Registrar Comprador
+            .btn_status Verificar Status
+
+    .content
+        .statusResponse
+        .box.payment
+            .box_top
+                .close
+
+            .box_middle
+                p.title Realizar pagamento
+
+                .choose
+                    .btn_choose.boleto boleto
+                    .btn_choose.credit_card cartão de crédito
+
+                .info_payment
+                    .payment-send
+                        label(for="id") Id do cliente
+                        input.id_client(type="text" name="id_client" placeholder="Digite do cliente" id="id" )
+                        label(for="cpf") Digite seu cpf
+                        input.cpf_buyer(type="text" name="cpf_buyer" placeholder="Digite seu cpf" id="cpf" )
+                        label(for="amount") Digite o valor
+                        input.amount_payment(type="text" name="amount_payment" placeholder="Digite o valor" id="amount" )
+
+                    .payment-complete-send
+                        label(for="name") Nome no cartão de crédito
+                        input.id_client(type="text" name="card_name" placeholder="Digite do cliente" id="name" )
+                        label(for="number") Numero do cartão de crédito
+                        input.cpf_buyer(type="text" name="card_number" placeholder="Digite seu cpf" id="number" )
+                        label(for="expiration") data de expiração
+                        input.amount_payment(type="text" name="card_expiration" placeholder="Digite o valor" id="expiration" )
+                        label(for="cvv") Código de segurança do cartão
+                        input.amount_payment(type="text" name="card_cvv" placeholder="Digite o valor" id="cvv" )
+
+            .box_bottom
+
+                .btn_confirm Confirmar Pagamento
+
+        .box.buyer
+            .box_top
+                .close
+
+            .box_middle
+                p.title Registrar Comprador
+
+                .info_register
+                    .buyer-send
+                        label(for="namebuyer") Nome do Comprador
+                        input.id_client(type="text" name="name_buyer" placeholder="Digite o nome do comprador" id="namebuyer" )
+                        label(for="cpfbuyer") Cpf do comprador
+                        input.cpf_buyer(type="text" name="cpf_buyer" placeholder="Digite seu cpf" id="cpfbuyer" )
+                        label(for="emailbuyer") E-mail do comprador
+                        input.email(type="text" name="email" placeholder="Digite seu e-mail" id="emailbuyer" )
+
+            .box_bottom
+
+                .btn_confirm Confirmar Registro
+
+
+        .box.status
+            .box_top
+                .close
+
+            .box_middle
+                p.title Verificar Status
+
+                p.description Digite seu CPF e consulte os pagamentos cadastrados
+
+                .info_register
+                    .buyer-send
+                        label(for="statuscpf") CPF
+                        input.id_client(type="text" name="cpf_buyer" placeholder="Digite o cpf" id="statuscpf" )
+
+            .box_bottom
+                .btn_confirm Consultar Pagamentos
+
+            .info_status
+                .box_result
+                    .item
+                        .line Id do cliente:
+                        .line.-white Nome do Comprador:
+                        .line Email do Comprador:
+                        .line.-white CPF do Comprador:
+                        .line Valor do Pagamento:
+                        .line.-white Tipo de Pagamento:
+                        .line Código do Boleto:
+                        .line.-white Nome do Cartão:
+                        .line Expiração do Cartão:
+                        .line.-white Numero do Cartão:
+                        .line Bandeira do Cartão:
+                        .line.-white Código de Segurança:
+                        .line Statos do Pagamento:
+
+
