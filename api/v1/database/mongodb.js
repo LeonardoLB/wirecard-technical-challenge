@@ -181,7 +181,7 @@ class MongoDB {
 
 
 
-    async getPaymentStatus(id){
+    async getPaymentStatus(cpf){
         this.connectDatabase()
         let isConnected = this.verifyConnection()
         if (!isConnected) {
@@ -191,7 +191,7 @@ class MongoDB {
             return { IsOk: false, problem: 'Ocorreu um problema em definir o Schema', type: 'schema' }
         }
         try {
-            let databaseResponse = await this._modelPayment.find({_id: id})
+            let databaseResponse = await this._modelPayment.find({cpf_buyer: cpf})
             if (databaseResponse.length === 0) {
                 return { IsOk: false, problem: 'Não há pagamentos com esse id', type: 'empty' }
             }
