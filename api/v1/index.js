@@ -3,8 +3,9 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const Payment = require('./payment')
-const Buyer = require('./buyer')
+const Payment = require('./controllers/payment')
+const Buyer = require('./controllers/buyer')
+const Checkout = require('./controllers/checkout')
 
 // run express
 var app = express()
@@ -12,6 +13,7 @@ var app = express()
 // instance my Payment Class
 var paymentMethod = new Payment()
 var BuyerMethod = new Buyer()
+var checkout = new Checkout()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
@@ -27,7 +29,7 @@ app.post( '/payment/register' , async function ( request, response ) {
     }
 
     if ( objPayment.type_payment === 'boleto') {
-        let res = await paymentMethod.boleto(objPayment)
+        let res = await checkout.boleto(objPayment)
         response.send( res )
     }
 
@@ -42,7 +44,7 @@ app.post( '/payment/register' , async function ( request, response ) {
             }
         }
 
-        let res = await paymentMethod.creditCard(objPayment)
+        let res = await checkout.creditCard(objPayment)
         response.send( res )
     }
 
@@ -59,7 +61,7 @@ app.post( '/buyer/register', async function (request, response) {
         cpf_buyer: request.body.cpf_buyer
     }
 
-    let res = await BuyerMethod.RegisterBuyer(objBuyer)
+    let res = await checkout.RegisterBuyer(objBuyer)
     response.send( res )
 
 } )
@@ -67,7 +69,7 @@ app.post( '/buyer/register', async function (request, response) {
 app.get( '/payment/status/:payment_id' , async function (request, response) {
 
     let id = request.params.payment_id
-    let res = await paymentMethod.StatusPayment(id)
+    let res = await checkout.StatusPayment(id)
     response.json( res )
 
 } )

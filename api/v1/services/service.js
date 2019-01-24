@@ -1,6 +1,6 @@
-const Database = require('./database/mongodb')
+const Database = require('../database/mongodb')
 const creditCardValidation = require('credit-card-validation')
-const ErrorHandling = require('./error')
+const ErrorHandling = require('../utils/error')
 const database = new Database()
 
 
