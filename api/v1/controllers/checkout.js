@@ -1,6 +1,6 @@
-const service = require('../services/service')
+const validation = require('../services/validations')
 
-const Service = new service()
+const Service = new validation()
 
 class Checkout {
 
@@ -16,7 +16,7 @@ class Checkout {
         return await Service.status(id)
     }
 
-    async RegisterBuyer(dataBuyer) {
+    async RegisterBuyer(dataBuyer){
         return await Service.registerBuyer(dataBuyer)
     }
 
