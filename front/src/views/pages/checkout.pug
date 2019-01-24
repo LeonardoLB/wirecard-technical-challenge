@@ -17,6 +17,14 @@ block body
 
     .content
         .statusResponse
+            .close
+            p Status
+            .status
+                p#textStatus
+            .codebar
+                .title Se seu pagamento for boleto abaixo irá aparecer seu código de barras
+                p#textCodebar
+
         .box.payment
             .box_top
                 .close
@@ -25,13 +33,11 @@ block body
                 p.title Realizar pagamento
 
                 .choose
-                    .btn_choose.boleto boleto
-                    .btn_choose.credit_card cartão de crédito
+                    .btn_choose.boleto(data-value = 'boleto') boleto
+                    .btn_choose.credit_card(data-value = 'card') cartão de crédito
 
                 .info_payment
                     .payment-send
-                        label(for="id") Id do cliente
-                        input.id_client(type="text" name="id_client" placeholder="Digite do cliente" id="id" )
                         label(for="cpf") Digite seu cpf
                         input.cpf_buyer(type="text" name="cpf_buyer" placeholder="Digite seu cpf" id="cpf" )
                         label(for="amount") Digite o valor
@@ -39,17 +45,17 @@ block body
 
                     .payment-complete-send
                         label(for="name") Nome no cartão de crédito
-                        input.id_client(type="text" name="card_name" placeholder="Digite do cliente" id="name" )
+                        input.id_client(type="text" name="card_name" placeholder="Digite do cliente" id="card_name" )
                         label(for="number") Numero do cartão de crédito
-                        input.cpf_buyer(type="text" name="card_number" placeholder="Digite seu cpf" id="number" )
+                        input.cpf_buyer(type="text" name="card_number" placeholder="Digite seu cpf" id="card_number" )
                         label(for="expiration") data de expiração
-                        input.amount_payment(type="text" name="card_expiration" placeholder="Digite o valor" id="expiration" )
+                        input.amount_payment(type="text" name="card_expiration" placeholder="Digite o valor" id="card_expiration" )
                         label(for="cvv") Código de segurança do cartão
-                        input.amount_payment(type="text" name="card_cvv" placeholder="Digite o valor" id="cvv" )
+                        input.amount_payment(type="text" name="card_cvv" placeholder="Digite o valor" id="card_cvv" )
 
             .box_bottom
 
-                .btn_confirm Confirmar Pagamento
+                .btn_confirm#confirmPayment Confirmar Pagamento
 
         .box.buyer
             .box_top
@@ -61,15 +67,15 @@ block body
                 .info_register
                     .buyer-send
                         label(for="namebuyer") Nome do Comprador
-                        input.id_client(type="text" name="name_buyer" placeholder="Digite o nome do comprador" id="namebuyer" )
+                        input.id_client(type="text" name="name_buyer" placeholder="Digite o nome do comprador" id="name_buyer" )
                         label(for="cpfbuyer") Cpf do comprador
-                        input.cpf_buyer(type="text" name="cpf_buyer" placeholder="Digite seu cpf" id="cpfbuyer" )
+                        input.cpf_buyer(type="text" name="cpf_buyer" placeholder="Digite seu cpf" id="cpf_buyer" )
                         label(for="emailbuyer") E-mail do comprador
-                        input.email(type="text" name="email" placeholder="Digite seu e-mail" id="emailbuyer" )
+                        input.email(type="text" name="email" placeholder="Digite seu e-mail" id="email_buyer" )
 
             .box_bottom
 
-                .btn_confirm Confirmar Registro
+                .btn_confirm#sendBuyer Confirmar Registro
 
 
         .box.status
@@ -84,7 +90,7 @@ block body
                 .info_register
                     .buyer-send
                         label(for="statuscpf") CPF
-                        input.id_client(type="text" name="cpf_buyer" placeholder="Digite o cpf" id="statuscpf" )
+                        input.id_client(type="text" name="cpf_buyer" placeholder="Digite o cpf" id="status_cpf" )
 
             .box_bottom
                 .btn_confirm Consultar Pagamentos
