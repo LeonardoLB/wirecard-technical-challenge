@@ -1,6 +1,6 @@
-const validation = require('../services/validations')
-
+const validation = require('../services/service')
 const Service = new validation()
+
 
 class Checkout {
 

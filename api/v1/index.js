@@ -5,10 +5,8 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const Checkout = require('./controllers/checkout')
 
-// run express
 var app = express()
 
-// instance my Payment Class
 var checkout = new Checkout()
 
 app.use(bodyParser.json());
