@@ -3,16 +3,12 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const Payment = require('./controllers/payment')
-const Buyer = require('./controllers/buyer')
 const Checkout = require('./controllers/checkout')
 
 // run express
 var app = express()
 
 // instance my Payment Class
-var paymentMethod = new Payment()
-var BuyerMethod = new Buyer()
 var checkout = new Checkout()
 
 app.use(bodyParser.json());
