@@ -1,7 +1,7 @@
 # wirecard-technical-challenge
 
 
-# Rodar aplicação
+# Como Rodar aplicação
 
 ### Requisitos (Contenha instalado em sua máquina)
 
@@ -22,7 +22,7 @@ docker run \
     mongo:4 \
 ```
 
-### Criando um database dentro do MongoDb e um usuario para acessar essas informações.
+### Criando um database dentro do MongoDb e um usuario para acessar essas informações
 
 ```
 docker exec -it mongodb \
@@ -48,11 +48,11 @@ e execute o comando para iniciar o funcionando da api:
 ```
 node index.js
 ```
-Neste momento a api já esta disponível para receber as rotas
+Neste momento a api já esta disponível para receber as rotas.
 
 ### Rotas disponiveis
 
-Link para acessar a Documentação da API
+Link para acessar a Documentação da API.
 ```
 https://documenter.getpostman.com/view/5267825/RztispvQ
 ```
@@ -86,3 +86,15 @@ MasterCard: 5206034443216817
 UnionPay: 6234253249408910
 Visa: 4012888888881881
 ```
+
+### Testes
+
+Para executar os testes vá até a pasta:
+```
+api/v1
+```
+e execute o seguinte comando:
+```
+npm test
+```
+nesse momento os testes serão executados.
