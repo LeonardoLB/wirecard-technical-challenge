@@ -224,8 +224,6 @@
             if (ajax.readyState == 4) {
                 var data = JSON.parse(ajax.response)
 
-                console.log(ajax.response )
-
                 if (data.Error) {
                     statusbox.classList.add('-active')
                     statustitle.innerHTML = data.Error.message
