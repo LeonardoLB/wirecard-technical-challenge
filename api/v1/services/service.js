@@ -21,7 +21,7 @@ class Service {
             return new ErrorHandling(responseFind.type, responseFind.problem )
         }
 
-        return { Payment_Information: responseFind.databaseResponse[0]}
+        return { Payment_Information: responseFind.databaseResponse}
 
     }
 

@@ -1,7 +1,6 @@
 const Mongoose = require('mongoose')
 
 
-
 class MongoDB {
 
     constructor(){
@@ -191,9 +190,9 @@ class MongoDB {
             return { IsOk: false, problem: 'Ocorreu um problema em definir o Schema', type: 'schema' }
         }
         try {
-            let databaseResponse = await this._modelPayment.find({cpf_buyer: cpf})
+            var databaseResponse = await this._modelPayment.find({cpf_buyer: cpf})
             if (databaseResponse.length === 0) {
-                return { IsOk: false, problem: 'Não há pagamentos com esse id', type: 'empty' }
+                return { IsOk: false, problem: 'Não há pagamentos com esse cpf', type: 'empty' }
             }
             return { IsOk: true, databaseResponse }
         } catch (error) {
@@ -233,7 +232,6 @@ class MongoDB {
         }
         try {
             let databaseResponse = await this._modelBuyers.find({cpf_buyer: cpf})
-            console.log(databaseResponse.length)
             if (databaseResponse.length === 0) {
                 return { IsOk: false }
             }
