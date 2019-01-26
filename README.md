@@ -33,11 +33,11 @@ docker exec -it mongodb \
 
 Assim que o mongoDb estiver funcionando com as configurações acima, vá até o arquivo:
 ```
-    api/v1/index.js
+api/v1/index.js
 ```
 e execute o comando para iniciar o funcionando da api:
 ```
-    node index.js
+node index.js
 ```
 Neste momento a api já esta disponível para receber as rotas
 
@@ -45,7 +45,7 @@ Neste momento a api já esta disponível para receber as rotas
 
 Link para acessar a Documentação da API
 ```
-    https://documenter.getpostman.com/view/5267825/RztispvQ
+https://documenter.getpostman.com/view/5267825/RztispvQ
 ```
 ### Estrutura do projeto
 
