@@ -5,6 +5,7 @@
 
 ### Requisitos (Contenha instalado em sua máquina)
 
+- Npm package
 - MongoDb
 - NodeJS
 - Docker (Caso opte em utilizar)
@@ -30,8 +31,16 @@ docker exec -it mongodb \
 ```
 
 ### Executando o projeto
-
-Assim que o mongoDb estiver funcionando com as configurações acima, vá até o arquivo:
+Precisamos instalar a node_modules para que a api funcione corretamente com suas dependências,
+vá até a pasta:
+```
+api/v1
+```
+e execute o seguinte comando:
+```
+npm install
+```
+assim que o mongoDb estiver funcionando com as configurações acima, vá até o arquivo:
 ```
 api/v1/index.js
 ```
