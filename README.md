@@ -63,3 +63,26 @@ fica na raiz do projeto para receber as rotas, as services ficam no encargo de m
 para o serviço correto que fica dentro da pasta services, onde ocorrem validações dos dados que chegam,
 assim do serviço é enviado ao arquivo na database responsável para inserir o dado no banco de dados.
 A pasta utils fica disponível para inserções externas ou classes que auxiliam no projeto.
+
+### Bandeiras de Cartões aceitas
+
+- American Express
+- Diner's Club
+- Discover
+- JCB
+- Maestro
+- MasterCard
+- UnionPay
+- Visa
+
+#### Alguns exemplos de cartões para testes
+```
+American Express: 378282246310005
+Diner's Club: 38520000023237
+Discover: 6011454931724887
+JCB: 3566002020360505
+Maestro: 6763946698976220
+MasterCard: 5206034443216817
+UnionPay: 6234253249408910
+Visa: 4012888888881881
+```
