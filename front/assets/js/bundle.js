@@ -219,6 +219,7 @@
 
         var ajax = new XMLHttpRequest()
         ajax.open('GET', `http://localhost:8002/payment/status/${cpf.value}`)
+        ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
         ajax.send()
         ajax.onreadystatechange = function () {
             if (ajax.readyState == 4) {
