@@ -164,6 +164,8 @@ aside nav .btn_status:hover:after {
   transition: 0.6s ease all;
   align-self: center;
   justify-self: center;
+  height: 400px;
+  overflow: overlay;
 }
 .box_result .item {
   width: 400px;
