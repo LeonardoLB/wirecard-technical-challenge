@@ -60,9 +60,9 @@ app.post( '/buyer/register', async function (request, response) {
 
 } )
 
-app.get( '/payment/status/:payment_id' , async function (request, response) {
+app.get( '/payment/status/:cpf_buyer' , async function (request, response) {
 
-    let id = request.params.payment_id
+    let id = request.params.cpf_buyer
     let res = await checkout.StatusPayment(id)
     response.json( res )
 
