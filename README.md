@@ -1,6 +1,3 @@
-# wirecard-technical-challenge
-
-
 # Como Rodar aplicação
 
 ### Requisitos (Contenha instalado em sua máquina)
