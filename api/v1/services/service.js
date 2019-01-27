@@ -1,20 +1,27 @@
 const Database = require('../database/mongodb')
 const creditCardValidation = require('credit-card-validation')
 const ErrorHandling = require('../utils/error')
+const Mocks = require('../utils/mocks')
+const mocks = new Mocks()
 const database = new Database()
 
 
 
 class Service {
 
-    async status(id){
+    async status(id, test = false){
+
 
         /*
-            Status Code
-            0 Aguardando
-            1 Aprovado
-            2 Negado
+        Status Code
+        0 Aguardando
+        1 Aprovado
+        2 Negado
         */
+
+        if (test) {
+            return { Payment_Information: mocks.MockStatus()}
+        }
 
         let responseFind = await database.getPaymentStatus(id)
         if (!responseFind.IsOk) {
@@ -26,7 +33,11 @@ class Service {
     }
 
 
-    async doBoletoPayment(dataPayment){
+    async doBoletoPayment(dataPayment, test = false){
+
+        if (test) {
+            return mocks.MockdoBoletoPayment()
+        }
 
         let buyerInfo = await this.identifyBuyer(dataPayment.cpf_buyer)
 
@@ -65,7 +76,11 @@ class Service {
 
 
 
-    async doCardPayment(dataPayment){
+    async doCardPayment(dataPayment, test = false){
+
+        if (test) {
+            return mocks.MockdoCardPayment()
+        }
 
         let buyerInfo = await this.identifyBuyer(dataPayment.cpf_buyer)
 
@@ -138,7 +153,12 @@ class Service {
 
 
 
-    async identifyBuyer(cpf){
+    async identifyBuyer(cpf, test = false){
+
+        if (test) {
+            return mocks.MockidentifyBuyer()
+        }
+
         let response = await database.getBuyer(cpf)
         if (!response.IsOk) {
             return false
@@ -148,7 +168,11 @@ class Service {
 
 
 
-    async registerBuyer(dataBuyer){
+    async registerBuyer(dataBuyer, test = false){
+
+        if (test) {
+            return mocks.MockregisterBuyer()
+        }
 
         if (!this.validateEmptyData(dataBuyer)) {
             return new ErrorHandling( 'Validate', 'Ocorreu um problema, existem campos vazios para cadastrar o comprador' )
