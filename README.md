@@ -39,7 +39,7 @@ npm install
 ```
 assim que o mongoDb estiver funcionando com as configurações acima, vá até o arquivo:
 ```
-api/v1/index.js
+api/v1/routes/index.js
 ```
 e execute o comando para iniciar o funcionando da api:
 ```
@@ -55,11 +55,9 @@ https://documenter.getpostman.com/view/5267825/RztispvQ
 ```
 ### Estrutura do projeto
 
-O projeto contem suas camadas separadas em controllers, services, database e utils, e o arquivo index.js
-fica na raiz do projeto para receber as rotas, as services ficam no encargo de mandar os dados recebidos
-para o serviço correto que fica dentro da pasta services, onde ocorrem validações dos dados que chegam,
-assim do serviço é enviado ao arquivo na database responsável para inserir o dado no banco de dados.
-A pasta utils fica disponível para inserções externas ou classes que auxiliam no projeto.
+O projeto contem suas camadas separadas em controllers, services, database, routes e utils, e o arquivo index.js
+fica na na pasta routes do projeto para receber as rotas, as controllers ficam no encargo de mandar os dados recebidos para o serviço correto que fica dentro da pasta services, onde ocorrem validações dos dados que chegam,
+assim do serviço é enviado ao arquivo na database responsável para inserir o dado no banco de dados e realizar consultas. A pasta utils fica disponível para inserções externas ou classes que auxiliam no projeto.
 
 ### Bandeiras de Cartões aceitas
 
