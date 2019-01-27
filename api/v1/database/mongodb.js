@@ -21,7 +21,7 @@ class MongoDB {
                 if (!error) {
                     return true
                 }
-                return false
+                throw('ocorreu um erro em conectar ao banco')
             })
         } catch (error) {
             return false
