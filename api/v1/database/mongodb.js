@@ -16,12 +16,17 @@ class MongoDB {
 
     connectDatabase(){
 
-        Mongoose.connect('mongodb://myuser:mypassword@localhost:27017/wirecard', { useNewUrlParser: true }, function (error) {
-            if (!error) {
-                return true
-            }
+        try {
+            Mongoose.connect('mongodb://myuser:mypassword@localhost:27017/wirecard', { useNewUrlParser: true }, function (error) {
+                if (!error) {
+                    return true
+                }
+                return false
+            })
+        } catch (error) {
             return false
-        })
+        }
+        return true
 
     }
 
