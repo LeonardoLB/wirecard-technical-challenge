@@ -3,7 +3,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const Checkout = require('./controllers/checkout')
+const Checkout = require('../controllers/checkout')
 
 var app = express()
 
